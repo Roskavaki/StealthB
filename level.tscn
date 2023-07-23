@@ -1,0 +1,114 @@
+[gd_scene load_steps=13 format=3 uid="uid://bcfkox1bjdtpe"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_bwjbg"]
+[ext_resource type="Texture2D" uid="uid://b83plaj07iq32" path="res://icon.svg" id="1_g1pkr"]
+[ext_resource type="TileSet" uid="uid://hy5fdq83hlqi" path="res://addons/Simple Tileset/assets/simple_tileset/simple_tileset.tres" id="2_63r7q"]
+[ext_resource type="Script" path="res://TileMap_verts.gd" id="4_1qkme"]
+[ext_resource type="Script" path="res://LineOfSight.gd" id="4_qhtiy"]
+[ext_resource type="Script" path="res://Guard.gd" id="5_gc2qp"]
+[ext_resource type="Script" path="res://door.gd" id="5_rgujq"]
+[ext_resource type="Script" path="res://endDoorArea.gd" id="8_q1cxn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1nhox"]
+radius = 15.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_hcyfs"]
+vertices = PackedVector2Array(154, 130, 501, -314, 506, 249, 153, 190, 152, 157, -506, 249, -164, 190, 154, 96, -512, -313, -165, 94, -162, 127, -165, 159)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(3, 2, 5, 6), PackedInt32Array(1, 0, 7), PackedInt32Array(8, 1, 7, 9), PackedInt32Array(5, 8, 9, 10, 11), PackedInt32Array(10, 0, 4, 11), PackedInt32Array(5, 11, 6)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-512, -313, -506, 249, 506, 249, 501, -314), PackedVector2Array(-165, 94, 154, 96, 154, 130, -162, 127), PackedVector2Array(-165, 159, 152, 157, 153, 190, -164, 190)])
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oihqn"]
+radius = 23.5372
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vsaub"]
+radius = 16.14
+
+[node name="level" type="Node2D"]
+
+[node name="player" type="CharacterBody2D" parent="."]
+script = ExtResource("1_bwjbg")
+
+[node name="Sprite2D" type="Sprite2D" parent="player"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_g1pkr")
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+shape = SubResource("CircleShape2D_1nhox")
+
+[node name="LineOfSight" type="Node2D" parent="player" node_paths=PackedStringArray("tilemap_verts")]
+scale = Vector2(0.25, 0.25)
+script = ExtResource("4_qhtiy")
+tilemap_verts = NodePath("../../TileMap")
+
+[node name="Sprite2D" type="Sprite2D" parent="player/LineOfSight"]
+texture = ExtResource("1_g1pkr")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("2_63r7q")
+format = 2
+layer_0/name = "Walls"
+layer_0/tile_data = PackedInt32Array(262139, 65536, 3, 262140, 131072, 3, 262141, 131072, 3, 262142, 131072, 3, 262143, 131072, 3, 196608, 131072, 3, 196609, 131072, 3, 196610, 131072, 3, 196611, 131072, 3, 196612, 196608, 3, -131066, 0, 3, -8, 0, 6, -7, 65536, 6, -6, 131072, 6, -65542, 131072, 5, -131078, 131072, 5, -196614, 131072, 5, -262150, 131072, 5, -65544, 0, 5, -131080, 0, 5, -196616, 0, 5, -262152, 0, 5, -327688, 0, 4, -327686, 131072, 4, -327687, 65536, 4, -196615, 65536, 5, 524271, 131072, 5, 458735, 131072, 5, 393199, 131072, 5, 327663, 131072, 5, 262127, 131072, 5, 196591, 131072, 5, 131055, 131072, 5, 65519, 131072, 5, -17, 131072, 5, -65553, 131072, 5, -131089, 131072, 5, -196625, 131072, 5, -262161, 131072, 5, -327697, 131072, 5, -393233, 131072, 5, -458769, 131072, 5, -524305, 131072, 5, -589841, 131072, 5, -655344, 0, 5, -393200, 0, 5, -327664, 0, 5, 65552, 0, 5, 131088, 0, 5, 327696, 0, 5, 262160, 0, 5, 196624, 0, 5, 16, 0, 5, -65520, 0, 5, -131056, 0, 5, -196592, 0, 5, -262128, 0, 5, 393232, 0, 5, 458768, 0, 5, -589808, 0, 5, -524272, 0, 5, -458736, 0, 5, -655375, 65536, 6, -655374, 65536, 6, -655373, 65536, 6, -655372, 65536, 6, -655371, 65536, 6, -655370, 65536, 6, -655369, 65536, 6, -655366, 65536, 6, -655365, 65536, 6, -655364, 65536, 6, -655363, 65536, 6, -655362, 65536, 6, -655361, 65536, 6, -720896, 65536, 6, -720895, 65536, 6, -720894, 65536, 6, -720893, 65536, 6, -720892, 65536, 6, -720891, 65536, 6, -720890, 65536, 6, -720889, 65536, 6, -720888, 65536, 6, -720887, 65536, 6, -720886, 65536, 6, -720885, 65536, 6, -720884, 65536, 6, -720883, 65536, 6, -720882, 65536, 6, 589809, 65536, 4, 589810, 65536, 4, 589811, 65536, 4, 589812, 65536, 4, 589813, 65536, 4, 589814, 65536, 4, 589815, 65536, 4, 589816, 65536, 4, 589817, 65536, 4, 589818, 65536, 4, 589819, 65536, 4, 589820, 65536, 4, 589821, 65536, 4, 589822, 65536, 4, 589823, 65536, 4, 524288, 65536, 4, 524289, 65536, 4, 524290, 65536, 4, 524291, 65536, 4, 524292, 65536, 4, 524293, 65536, 4, 524294, 65536, 4, 524295, 65536, 4, 524296, 65536, 4, 524297, 65536, 4, 524298, 65536, 4, 524299, 65536, 4, 524300, 65536, 4, 524301, 65536, 4, 524302, 65536, 4, 589808, 65536, 4, 524303, 65536, 4, -720881, 65536, 6, -655376, 65536, 6, 327684, 196608, 3, 327683, 131072, 3, 327682, 131072, 3, 327681, 131072, 3, 327680, 131072, 3, 393215, 131072, 3, 393214, 131072, 3, 393213, 131072, 3, 393212, 131072, 3, 393211, 65536, 3, 65523, 0, 4, 131059, 0, 5, 196595, 0, 6, 65524, 65536, 4, 131060, 65536, 5, 196596, 65536, 6, 65525, 131072, 4, 131061, 131072, 5, 196597, 131072, 6, 9, 65536, 4, 10, 65536, 4, 11, 65536, 4, 12, 65536, 4, 13, 131072, 4, 65549, 131072, 6, 65544, 0, 6, 8, 0, 4, 65545, 65536, 6, 65546, 65536, 6, 65547, 65536, 6, 65548, 65536, 6, -720880, 262144, 3)
+layer_1/name = "Background"
+layer_1/enabled = false
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
+script = ExtResource("4_1qkme")
+
+[node name="door" type="Node2D" parent="."]
+position = Vector2(199, 110)
+scale = Vector2(0.17, 0.5)
+script = ExtResource("5_rgujq")
+speed = 0.735
+
+[node name="Sprite2D" type="Sprite2D" parent="door"]
+texture = ExtResource("1_g1pkr")
+
+[node name="Timer" type="Timer" parent="door"]
+wait_time = 3.203
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="door"]
+vertices = PackedVector2Array(-60, -60, 60, -60, 60, 62, -58, 62)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
+position = Vector2(5, 2)
+navigation_polygon = SubResource("NavigationPolygon_hcyfs")
+
+[node name="Guard" type="CharacterBody2D" parent="." node_paths=PackedStringArray("target")]
+position = Vector2(100, 0)
+script = ExtResource("5_gc2qp")
+target = NodePath("../player")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Guard"]
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Guard"]
+scale = Vector2(0.476563, 0.453125)
+texture = ExtResource("1_g1pkr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Guard"]
+shape = SubResource("CircleShape2D_oihqn")
+disabled = true
+
+[node name="endDoor" type="Node2D" parent="."]
+position = Vector2(0.175, -301.195)
+
+[node name="endDoorArea" type="Area2D" parent="endDoor"]
+script = ExtResource("8_q1cxn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="endDoor/endDoorArea"]
+shape = SubResource("CircleShape2D_vsaub")
+
+[node name="Sprite2D" type="Sprite2D" parent="endDoor"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_g1pkr")
+
+[connection signal="timeout" from="door/Timer" to="door" method="_on_timer_timeout"]
+[connection signal="velocity_computed" from="Guard/NavigationAgent2D" to="Guard" method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="body_entered" from="endDoor/endDoorArea" to="endDoor/endDoorArea" method="_on_body_entered"]

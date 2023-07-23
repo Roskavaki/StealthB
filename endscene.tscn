@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dykx6xv73o63l"]
+
+[node name="endscene" type="Node2D"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 554.0
+offset_top = 304.0
+offset_right = 652.0
+offset_bottom = 359.0
+text = "END"
+fit_content = true
